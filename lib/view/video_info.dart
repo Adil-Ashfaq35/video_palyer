@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:videoplayer/utils/colors.dart' as color;
 
@@ -9,6 +11,20 @@ class VideoInfo extends StatefulWidget {
 }
 
 class _VideoInfoState extends State<VideoInfo> {
+  List info = [];
+  _DataLoad() {
+    return DefaultAssetBundle.of(context)
+        .loadString("json/info.json")
+        .then((value) {
+      info = jsonDecode(value);
+    });
+  }
+
+  @override
+  void initState() {
+    _DataLoad();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,6 +128,23 @@ class _VideoInfoState extends State<VideoInfo> {
                       color: Colors.white,
                       borderRadius:BorderRadius.only(topRight: Radius.circular(50))
                     ),
+                    child:Column(
+                      children: [
+                        Row(
+                          children: [
+                            const SizedBox(height: 70,width: 15,),
+                            Text("Circuit 1, Legs Toning",style:
+                            TextStyle(color:color.AppColor.circuitsColor,fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            ),),
+                            Expanded(child: Container()),
+                            Icon(Icons.loop,size: 30,color: color.AppColor.loopColor,),
+                            Text("3 sets",style: TextStyle(color:color.AppColor.setsColor ),),
+                            const SizedBox(width: 20,),
+                          ],
+                        )
+                      ],
+                    ) ,
                   )
               )
 
